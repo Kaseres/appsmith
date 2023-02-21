@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      tag: 1
+      tag: 1 
       is_beta: ${{ steps.get_version.outputs.is_beta }}
 
     steps:
@@ -229,7 +229,7 @@ jobs:
           rm app/rts/dist/rts-dist.tar
 
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
