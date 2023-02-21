@@ -132,15 +132,15 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Test and Build package
-        working-directory: app/server
-        run: |
-          mvn --batch-mode versions:set \
-            -DnewVersion=${{ needs.prelude.outputs.tag }} \
-            -DgenerateBackupPoms=false \
-            -DprocessAllModules=true
-          ./build.sh -DskipTests
-          ls -l dist
+      # - name: Test and Build package
+      #   working-directory: app/server
+      #   run: |
+      #     mvn --batch-mode versions:set \
+      #       -DnewVersion=${{ needs.prelude.outputs.tag }} \
+      #       -DgenerateBackupPoms=false \
+      #       -DprocessAllModules=true
+      #     ./build.sh -DskipTests
+      #     ls -l dist
 
       - name: Upload server build bundle
         uses: actions/upload-artifact@v3
