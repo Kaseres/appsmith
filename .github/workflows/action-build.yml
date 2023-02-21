@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      tag: ${{ steps.get_version.outputs.tag }}
+      tag: 1
       is_beta: ${{ steps.get_version.outputs.is_beta }}
 
     steps:
@@ -138,7 +138,7 @@ jobs:
         working-directory: app/server
         run: |
           mvn --batch-mode versions:set \
-            -DnewVersion=${{ steps.get_version.outputs.tag }} \
+            -DnewVersion=${{ needs.prelude.outputs.tag }} \
             -DgenerateBackupPoms=false \
             -DprocessAllModules=true
           ./build.sh -DskipTests
