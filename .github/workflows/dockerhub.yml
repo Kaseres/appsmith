@@ -15,8 +15,8 @@ jobs:
     - name: Log in to Docker Hub
       uses: docker/login-action@v1.10.0
       with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        username: kaseres
+        password: dckr_pat_0TuHGkDSxhDdIUs_dpOPnircZzI
 
     - name: Build and push client image
       uses: depot/build-push-action@v1
@@ -24,4 +24,4 @@ jobs:
         context: app/client
         push: true
         tags: |
-          ${{ secrets.DOCKER_HUB_ORGANIZATION }}/appsmith-editor:${{needs.prelude.outputs.tag}}
+          kaseres/appsmith-editor:1
