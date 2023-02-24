@@ -235,6 +235,9 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
       - name: Build and push client image
+        permissions:
+          contents: read
+          id-token: write
         uses: depot/build-push-action@v1
         with:
           context: app/client

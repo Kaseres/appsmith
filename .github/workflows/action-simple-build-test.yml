@@ -1,0 +1,41 @@
+name: Appsmith Simple Build Test Client and Server
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: [release, master]
+    paths:
+      - "app/client/**"
+      - "app/server/**"
+      - "app/rts/**"
+
+jobs:
+  server-build:
+    defaults:
+      run:
+        working-directory: app/server
+    
+    runs-on: ubuntu-latest
+    if: |
+      github.event.pull_request.head.repo.full_name == github.repository ||
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'repository_dispatch'
+
+    # Service containers to run with this job. Required for running tests
+    services:
+      # Label used to access the service container
+      redis:
+        # Docker Hub image for Redis
+        image: redis
+        ports:
+          # Opens tcp port 6379 on the host and service container
+          - 6379:6379
+      mongo:
+        image: mongo
+        ports:
+          - 27017:27017
+
+      steps:
+        
