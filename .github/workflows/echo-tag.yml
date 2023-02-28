@@ -1,7 +1,9 @@
 name: Echo step version tag
 
 on:
-  # Ref: <https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows#release>.
+  workflow_dispatch:
+    branches:
+      - release
   release:
     types:
       # Unlike the `released` event, the `published` event triggers for pre-releases as well.
