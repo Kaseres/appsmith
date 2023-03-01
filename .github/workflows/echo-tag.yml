@@ -1,0 +1,54 @@
+name: Echo step version tag
+
+on:
+  workflow_dispatch:
+    branches:
+      - release
+  release:
+    types:
+      # Unlike the `released` event, the `published` event triggers for pre-releases as well.
+      - released
+
+jobs:
+  prelude:
+    runs-on: ubuntu-latest
+
+    outputs:
+      tag: ${{ steps.get_version.outputs.tag }}
+      is_beta: ${{ steps.get_version.outputs.is_beta }}
+
+    steps:
+      - name: Environment details
+        run: |
+          echo "PWD: $PWD"
+          echo "GITHUB_REF: $GITHUB_REF"
+          echo "GITHUB_SHA: $GITHUB_SHA"
+          echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
+          echo "GITHUB_OUTPUT: $GITHUB_OUTPUT"
+          
+      - name: Get the version
+        id: get_version
+        run: |
+          tag="${GITHUB_REF#refs/tags/}"
+          echo "tag=$tag" >> $GITHUB_OUTPUT
+          if [[ $tag == *"beta"* ]]; then
+            echo "is_beta=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_beta=false" >> $GITHUB_OUTPUT
+          fi
+          
+  server-build:
+    needs:
+      - prelude
+
+    defaults:
+      run:
+        working-directory: app/server
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get Version
+        uses: battila7/get-version-action@v2
+      - run: echo ${{ steps.get_version.outputs.version }}
+      - run: echo ${{ steps.get_version.outputs.version-without-v }}
