@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      tag: 1.1 
+      tag: ${{ steps.get_version.outputs.tag }}
       is_beta: ${{ steps.get_version.outputs.is_beta }}
 
     steps:
