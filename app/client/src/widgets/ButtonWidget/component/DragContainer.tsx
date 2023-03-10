@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ButtonVariant } from "components/constants";
-import { RenderMode, RenderModes } from "constants/WidgetConstants";
+import { RenderMode, RenderModes, TextSize } from "constants/WidgetConstants";
 import { buttonHoverActiveStyles } from "./utils";
 
 /*
@@ -33,6 +33,8 @@ export type ButtonContainerProps = {
   buttonVariant?: ButtonVariant;
   disabled?: boolean;
   loading?: boolean;
+  fontSize?: TextSize;
+  textColor?: string;
   style?: React.CSSProperties;
 };
 
@@ -84,6 +86,7 @@ export function DragContainer(props: DragContainerProps) {
           }
         }}
         style={props.style}
+        textColor={props.textColor}
       >
         {props.children}
       </ButtonContainer>

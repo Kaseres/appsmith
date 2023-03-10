@@ -1,6 +1,6 @@
 import React from "react";
 import BaseWidget, { WidgetProps, WidgetState } from "widgets/BaseWidget";
-import { WidgetType } from "constants/WidgetConstants";
+import { TextSize, WidgetType } from "constants/WidgetConstants";
 import ButtonComponent, { ButtonType } from "../component";
 import {
   EventType,
@@ -181,6 +181,51 @@ class ButtonWidget extends BaseWidget<ButtonWidgetProps, ButtonWidgetState> {
         sectionName: "General",
         children: [
           {
+            propertyName: "fontSize",
+            label: "Font Size",
+            helpText: "Controls the size of the font used",
+            controlType: "DROP_DOWN",
+            defaultValue: "1rem",
+            options: [
+              {
+                label: "S",
+                value: "0.875rem",
+                subText: "0.875rem",
+              },
+              {
+                label: "M",
+                value: "1rem",
+                subText: "1rem",
+              },
+              {
+                label: "L",
+                value: "1.25rem",
+                subText: "1.25rem",
+              },
+              {
+                label: "XL",
+                value: "1.875rem",
+                subText: "1.875rem",
+              },
+              {
+                label: "XXL",
+                value: "3rem",
+                subText: "3rem",
+              },
+              {
+                label: "3XL",
+                value: "3.75rem",
+                subText: "3.75rem",
+              },
+            ],
+            isJSConvertible: true,
+            isBindProperty: true,
+            isTriggerProperty: false,
+            validation: {
+              type: ValidationTypes.TEXT,
+            },
+          },
+          {
             propertyName: "buttonVariant",
             label: "Button Variant",
             controlType: "ICON_TABS",
@@ -314,6 +359,21 @@ class ButtonWidget extends BaseWidget<ButtonWidgetProps, ButtonWidgetState> {
         sectionName: "Color",
         children: [
           {
+            propertyName: "textColor",
+            label: "Text Color",
+            helpText: "Controls the color of the text displayed",
+            controlType: "COLOR_PICKER",
+            isJSConvertible: true,
+            isBindProperty: true,
+            isTriggerProperty: false,
+            validation: {
+              type: ValidationTypes.TEXT,
+              params: {
+                regex: /^(?![<|{{]).+/,
+              },
+            },
+          },
+          {
             propertyName: "buttonColor",
             helpText: "Changes the color of the button",
             label: "Button Color",
@@ -359,6 +419,7 @@ class ButtonWidget extends BaseWidget<ButtonWidgetProps, ButtonWidgetState> {
 
   static getStylesheetConfig(): Stylesheet {
     return {
+      textColor: "{{appsmith.theme.colors.secondaryColor}}",
       buttonColor: "{{appsmith.theme.colors.primaryColor}}",
       borderRadius: "{{appsmith.theme.borderRadius.appBorderRadius}}",
       boxShadow: "none",
@@ -435,6 +496,7 @@ class ButtonWidget extends BaseWidget<ButtonWidgetProps, ButtonWidgetState> {
         buttonColor={this.props.buttonColor}
         buttonVariant={this.props.buttonVariant}
         clickWithRecaptcha={this.clickWithRecaptchaBound}
+        fontSize={this.props.fontSize}
         googleRecaptchaKey={this.props.googleRecaptchaKey}
         handleRecaptchaV2Loading={this.handleRecaptchaV2Loading}
         iconAlign={this.props.iconAlign}
@@ -446,6 +508,7 @@ class ButtonWidget extends BaseWidget<ButtonWidgetProps, ButtonWidgetState> {
         placement={this.props.placement}
         recaptchaType={this.props.recaptchaType}
         text={this.props.text}
+        textColor={this.props.textColor}
         tooltip={this.props.tooltip}
         type={this.props.buttonType || ButtonType.BUTTON}
         widgetId={this.props.widgetId}
@@ -468,6 +531,8 @@ export interface ButtonWidgetProps extends WidgetProps {
   buttonType?: ButtonType;
   googleRecaptchaKey?: string;
   buttonVariant?: ButtonVariant;
+  fontSize?: TextSize;
+  textColor?: string;
   buttonColor?: string;
   borderRadius?: string;
   boxShadow?: string;

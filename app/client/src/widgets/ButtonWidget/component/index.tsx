@@ -9,6 +9,7 @@ import {
   Position,
   Classes,
 } from "@blueprintjs/core";
+import { DEFAULT_FONT_SIZE, TextSize } from "constants/WidgetConstants";
 import { Popover2 } from "@blueprintjs/popover2";
 import { IconName } from "@blueprintjs/icons";
 
@@ -37,7 +38,6 @@ import {
   getCustomBorderColor,
   getCustomJustifyContent,
   getAlignText,
-  getComplementaryGrayscaleColor,
 } from "widgets/WidgetUtils";
 import { DragContainer } from "./DragContainer";
 import { buttonHoverActiveStyles } from "./utils";
@@ -84,7 +84,7 @@ gap: 8px;
   ${buttonHoverActiveStyles}
  }
 
-${({ buttonColor, buttonVariant, theme }) => `
+${({ buttonColor, buttonVariant, fontSize, textColor, theme }) => `
     background: ${
       getCustomBackgroundColor(buttonVariant, buttonColor) !== "none"
         ? getCustomBackgroundColor(buttonVariant, buttonColor)
@@ -131,10 +131,11 @@ ${({ buttonColor, buttonVariant, theme }) => `
     line-height: normal;
 
     color: ${
-      buttonVariant === ButtonVariantTypes.PRIMARY
-        ? getComplementaryGrayscaleColor(buttonColor)
-        : getCustomBackgroundColor(ButtonVariantTypes.PRIMARY, buttonColor)
+      textColor
+        ? textColor
+        : getCustomBackgroundColor(ButtonVariantTypes.SECONDARY, buttonColor)
     } !important;
+    font-size: ${fontSize};
   }
 `}
 
@@ -158,7 +159,9 @@ export const StyledButton = styled((props) => (
       "borderRadius",
       "boxShadow",
       "boxShadowColor",
+      "textColor",
       "buttonColor",
+      "fontSize",
       "buttonVariant",
     ])}
   />
@@ -167,7 +170,9 @@ export const StyledButton = styled((props) => (
 `;
 
 export type ButtonStyleProps = {
+  textColor?: string;
   buttonColor?: string;
+  fontSize?: TextSize;
   buttonVariant?: ButtonVariant;
   boxShadow?: string;
   boxShadowColor?: string;
@@ -187,6 +192,7 @@ export function BaseButton(props: IButtonProps & ButtonStyleProps) {
     buttonVariant,
     className,
     disabled,
+    fontSize,
     icon,
     iconAlign,
     iconName,
@@ -195,6 +201,7 @@ export function BaseButton(props: IButtonProps & ButtonStyleProps) {
     placement,
     rightIcon,
     text,
+    textColor,
   } = props;
 
   const isRightAlign = iconAlign === Alignment.RIGHT;
@@ -204,9 +211,11 @@ export function BaseButton(props: IButtonProps & ButtonStyleProps) {
       buttonColor={buttonColor}
       buttonVariant={buttonVariant}
       disabled={disabled}
+      fontSize={fontSize}
       loading={loading}
       onClick={onClick}
       showInAllModes
+      textColor={textColor}
     >
       <StyledButton
         alignText={getAlignText(isRightAlign, iconName)}
@@ -219,18 +228,22 @@ export function BaseButton(props: IButtonProps & ButtonStyleProps) {
         data-test-variant={buttonVariant}
         disabled={disabled}
         fill
+        fontSize={fontSize}
         icon={isRightAlign ? icon : iconName || icon}
         loading={loading}
         onClick={onClick}
         placement={placement}
         rightIcon={isRightAlign ? iconName || rightIcon : rightIcon}
         text={text}
+        textColor={textColor}
       />
     </DragContainer>
   );
 }
 
 BaseButton.defaultProps = {
+  fontSize: DEFAULT_FONT_SIZE,
+  textColor: Colors.GREEN,
   buttonColor: Colors.GREEN,
   buttonVariant: ButtonVariantTypes.PRIMARY,
   disabled: false,
@@ -260,6 +273,8 @@ interface ButtonComponentProps extends ComponentProps {
   isLoading: boolean;
   rightIcon?: IconName | MaybeElement;
   type: ButtonType;
+  fontSize?: TextSize;
+  textColor?: string;
   buttonColor?: string;
   buttonVariant?: ButtonVariant;
   borderRadius?: string;
@@ -452,6 +467,7 @@ function ButtonComponent(props: ButtonComponentProps & RecaptchaProps) {
         buttonColor={props.buttonColor}
         buttonVariant={props.buttonVariant}
         disabled={props.isDisabled}
+        fontSize={props.fontSize}
         icon={props.icon}
         iconAlign={props.iconAlign}
         iconName={props.iconName}
@@ -459,6 +475,7 @@ function ButtonComponent(props: ButtonComponentProps & RecaptchaProps) {
         placement={props.placement}
         rightIcon={props.rightIcon}
         text={props.text}
+        textColor={props.textColor}
         type={props.type}
       />
     </BtnWrapper>
