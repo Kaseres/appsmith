@@ -19,7 +19,6 @@ import {
   getCustomBackgroundColor,
   getCustomBorderColor,
   getCustomHoverColor,
-  getComplementaryGrayscaleColor,
 } from "widgets/WidgetUtils";
 import Interweave from "interweave";
 import { Popover2 } from "@blueprintjs/popover2";
