@@ -49,6 +49,7 @@ const TooltipStyles = createGlobalStyle`
 
 type IconButtonContainerProps = {
   disabled?: boolean;
+  iconColor?: string;
   buttonColor?: string;
   buttonVariant?: ButtonVariant;
   hasOnClickAction?: boolean;
@@ -103,6 +104,7 @@ const IconButtonContainer = styled.div<IconButtonContainerProps>`
 export interface ButtonStyleProps {
   borderRadius?: ButtonBorderRadius;
   boxShadow?: string;
+  iconColor: string;
   buttonColor: string;
   buttonVariant?: ButtonVariant;
   dimension?: number;
@@ -137,7 +139,14 @@ export const StyledButton = styled((props) => (
 
 
 
-  ${({ buttonColor, buttonVariant, compactMode, hasOnClickAction, theme }) => `
+  ${({
+    buttonColor,
+    buttonVariant,
+    compactMode,
+    hasOnClickAction,
+    iconColor,
+    theme,
+  }) => `
     &:enabled {
       background: ${
         getCustomBackgroundColor(buttonVariant, buttonColor) !== "none"
@@ -207,16 +216,7 @@ export const StyledButton = styled((props) => (
       justify-content: center;
       align-items: center;
 
-      color: ${
-        buttonVariant === ButtonVariantTypes.PRIMARY
-          ? getComplementaryGrayscaleColor(buttonColor)
-          : getCustomBackgroundColor(
-              ButtonVariantTypes.PRIMARY,
-              buttonColor,
-            ) !== "none"
-          ? getCustomBackgroundColor(ButtonVariantTypes.PRIMARY, buttonColor)
-          : `${theme.colors.button.primary.secondary.textColor}`
-      } !important;
+      color: ${iconColor} !important;
     }
 
     & > span > svg {
@@ -236,6 +236,7 @@ export const StyledButton = styled((props) => (
 
 export interface IconButtonComponentProps extends ComponentProps {
   iconName?: IconName;
+  iconColor?: string;
   buttonColor?: string;
   buttonVariant: ButtonVariant;
   borderRadius: string;
@@ -258,6 +259,7 @@ function IconButtonComponent(props: IconButtonComponentProps) {
     buttonVariant,
     hasOnClickAction,
     height,
+    iconColor,
     isDisabled,
     onClick,
     renderMode,
@@ -284,6 +286,7 @@ function IconButtonComponent(props: IconButtonComponentProps) {
       buttonVariant={buttonVariant}
       disabled={isDisabled}
       hasOnClickAction={hasOnClickAction}
+      iconColor={iconColor}
       onClick={() => {
         if (isDisabled) return;
         onClick();
@@ -299,6 +302,7 @@ function IconButtonComponent(props: IconButtonComponentProps) {
         disabled={isDisabled}
         hasOnClickAction={hasOnClickAction}
         icon={props.iconName}
+        iconColor={iconColor}
         large
       />
     </IconButtonContainer>

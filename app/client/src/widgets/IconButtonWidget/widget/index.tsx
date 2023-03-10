@@ -155,6 +155,21 @@ class IconButtonWidget extends BaseWidget<IconButtonWidgetProps, WidgetState> {
         sectionName: "Color",
         children: [
           {
+            propertyName: "iconColor",
+            label: "Icon Color",
+            helpText: "Controls the color of the text displayed",
+            controlType: "COLOR_PICKER",
+            isJSConvertible: true,
+            isBindProperty: true,
+            isTriggerProperty: false,
+            validation: {
+              type: ValidationTypes.TEXT,
+              params: {
+                regex: /^(?![<|{{]).+/,
+              },
+            },
+          },
+          {
             propertyName: "buttonColor",
             helpText: "Sets the style of the icon button",
             label: "Button Color",
@@ -203,6 +218,7 @@ class IconButtonWidget extends BaseWidget<IconButtonWidgetProps, WidgetState> {
 
   static getStylesheetConfig(): Stylesheet {
     return {
+      iconColor: "#FFFFFF",
       buttonColor: "{{appsmith.theme.colors.primaryColor}}",
       borderRadius: "{{appsmith.theme.borderRadius.appBorderRadius}}",
       boxShadow: "none",
@@ -215,6 +231,7 @@ class IconButtonWidget extends BaseWidget<IconButtonWidgetProps, WidgetState> {
       boxShadow,
       buttonColor,
       buttonVariant,
+      iconColor,
       iconName,
       isDisabled,
       isVisible,
@@ -232,6 +249,7 @@ class IconButtonWidget extends BaseWidget<IconButtonWidgetProps, WidgetState> {
         height={
           (this.props.bottomRow - this.props.topRow) * this.props.parentRowSpace
         }
+        iconColor={iconColor}
         iconName={iconName}
         isDisabled={isDisabled}
         isVisible={isVisible}
