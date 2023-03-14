@@ -25,6 +25,16 @@ const StyledContainerComponent = styled.div<
   opacity: ${(props) => (props.resizeDisabled ? "0.8" : "1")};
 
   background: ${(props) => props.backgroundColor};
+  ${(props) =>
+    props.gradientType
+      ? "background-image: linear-gradient(" +
+        props.gradientType +
+        ", " +
+        props.gradientsColor +
+        ", " +
+        props.gradientsSecondColor +
+        ");"
+      : ""}
   &:hover {
     background-color: ${(props) => {
       return props.onClickCapture && props.backgroundColor
@@ -33,6 +43,7 @@ const StyledContainerComponent = styled.div<
             .toString()
         : props.backgroundColor;
     }};
+    
     z-index: ${(props) => (props.onClickCapture ? "2" : "1")};
     cursor: ${(props) => (props.onClickCapture ? "pointer" : "inherit")};
   }
@@ -43,6 +54,9 @@ interface ContainerWrapperProps {
   resizeDisabled?: boolean;
   shouldScrollContents?: boolean;
   backgroundColor?: string;
+  gradientsColor?: string;
+  gradientsSecondColor?: string;
+  gradientType?: string;
   widgetId: string;
   type: WidgetType;
 }
@@ -71,6 +85,9 @@ function ContainerComponentWrapper(
       className={`${
         props.shouldScrollContents ? getCanvasClassName() : ""
       } ${generateClassName(props.widgetId)} container-with-scrollbar`}
+      gradientType={props.gradientType}
+      gradientsColor={props.gradientsColor}
+      gradientsSecondColor={props.gradientsSecondColor}
       onClickCapture={props.onClickCapture}
       ref={containerRef}
       resizeDisabled={props.resizeDisabled}
@@ -106,10 +123,16 @@ function ContainerComponent(props: ContainerComponentProps) {
       boxShadow={props.boxShadow}
       className="style-container"
       containerStyle={props.containerStyle}
+      gradientType={props.gradientType}
+      gradientsColor={props.gradientsColor}
+      gradientsSecondColor={props.gradientsSecondColor}
       widgetId={props.widgetId}
     >
       <ContainerComponentWrapper
         backgroundColor={props.backgroundColor}
+        gradientType={props.gradientType}
+        gradientsColor={props.gradientsColor}
+        gradientsSecondColor={props.gradientsSecondColor}
         onClickCapture={props.onClickCapture}
         resizeDisabled={props.resizeDisabled}
         shouldScrollContents={props.shouldScrollContents}
@@ -131,6 +154,9 @@ export interface ContainerComponentProps extends WidgetStyleContainerProps {
   detachFromLayout?: boolean;
   onClickCapture?: MouseEventHandler<HTMLDivElement>;
   backgroundColor?: string;
+  gradientsColor?: string;
+  gradientsSecondColor?: string;
+  gradientType?: string;
   type: WidgetType;
   noScroll?: boolean;
 }

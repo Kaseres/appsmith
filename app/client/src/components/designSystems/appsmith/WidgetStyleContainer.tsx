@@ -20,6 +20,9 @@ export interface WidgetStyleContainerProps {
   children?: ReactNode;
   borderColor?: Color;
   backgroundColor?: Color;
+  gradientsColor?: Color;
+  gradientsSecondColor?: Color;
+  gradientType?: string;
   borderWidth?: number;
   borderRadius?: number;
   boxShadow?: BoxShadow;

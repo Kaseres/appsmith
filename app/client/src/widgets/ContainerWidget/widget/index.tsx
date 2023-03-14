@@ -99,6 +99,76 @@ class ContainerWidget extends BaseWidget<
         ],
       },
       {
+        sectionName: "Gradients",
+        children: [
+          {
+            propertyName: "gradientType",
+            label: "Gradient Type",
+            // helpText: "Controls the font family being used",
+            controlType: "DROP_DOWN",
+            options: [
+              {
+                label: "Select",
+                value: "",
+              },
+              {
+                label: "Top to Bottom",
+                value: "to bottom",
+              },
+              {
+                label: "Bottom to Top",
+                value: "to top",
+              },
+              {
+                label: "Left to Right",
+                value: "to right",
+              },
+              {
+                label: "Right to Left",
+                value: "to left",
+              },
+              {
+                label: "Top Left to Bottom Right",
+                value: "to bottom right",
+              },
+              {
+                label: "Bottom Left to Top Right",
+                value: "to top right",
+              },
+            ],
+            defaultValue: "",
+            isJSConvertible: true,
+            isBindProperty: true,
+            isTriggerProperty: false,
+            validation: {
+              type: ValidationTypes.TEXT,
+            },
+          },
+          {
+            helpText: "Use a html color name, HEX, RGB or RGBA value",
+            placeholderText: "#FFFFFF / Gray / rgb(255, 99, 71)",
+            propertyName: "gradientsColor",
+            label: "Gradients Color 1",
+            controlType: "COLOR_PICKER",
+            isJSConvertible: true,
+            isBindProperty: true,
+            isTriggerProperty: false,
+            validation: { type: ValidationTypes.TEXT },
+          },
+          {
+            helpText: "Use a html color name, HEX, RGB or RGBA value",
+            placeholderText: "#FFFFFF / Gray / rgb(255, 99, 71)",
+            propertyName: "gradientsSecondColor",
+            label: "Gradients Color 2",
+            controlType: "COLOR_PICKER",
+            isJSConvertible: true,
+            isBindProperty: true,
+            isTriggerProperty: false,
+            validation: { type: ValidationTypes.TEXT },
+          },
+        ],
+      },
+      {
         sectionName: "Border and Shadow",
         children: [
           {
